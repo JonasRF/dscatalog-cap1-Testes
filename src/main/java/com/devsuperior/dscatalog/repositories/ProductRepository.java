@@ -28,7 +28,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             	INNER JOIN tb_product_category ON tb_product_category.product_id = tb_product.id
             	WHERE (:categoryIds IS NULL OR tb_product_category.category_id IN :categoryIds)
             	AND (LOWER(tb_product.name) LIKE LOWER(CONCAT('%',:name,'%')))
+            	ORDER BY tb_product.name 
             	) AS tb_result                        
             """)
     Page<ProductProjection> searchProducts(List<Long> categoryIds, String name, Pageable pageable);
+
+    @Query("SELECT obj FROM Product obj JOIN FETCH obj.categories WHERE obj.id IN :productIds ORDER BY obj.name")
+    List<Product> searchProductsWithCategories(List<Long> productIds);
 }
