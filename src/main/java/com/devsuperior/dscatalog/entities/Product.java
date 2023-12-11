@@ -1,23 +1,16 @@
 package com.devsuperior.dscatalog.entities;
 
+import com.devsuperior.dscatalog.projections.IdProjection;
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "tb_product")
-public class Product {
+public class Product implements IdProjection<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +43,7 @@ public class Product {
 		this.date = date;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
